@@ -7,7 +7,8 @@ defmodule Wifixir.Mixfile do
      elixir: "~> 1.1",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
-     escript: [main_module: Wifixir],
+     escript: [main_module: Wifixir,
+               path: "bin/wifixir"],
      deps: deps]
   end
 
@@ -15,7 +16,7 @@ defmodule Wifixir.Mixfile do
   #
   # Type "mix help compile.app" for more information
   def application do
-    [applications: [:logger]]
+    [applications: [:eex, :logger]]
   end
 
   # Dependencies can be Hex packages:
