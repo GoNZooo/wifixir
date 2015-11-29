@@ -11,7 +11,7 @@ defmodule Wifixir do
     args,
     strict:
     [ssid: :string, passphrase: :string],
-    aliases: [s: :ssid, pw: :passphrase])
+    aliases: [s: :ssid, p: :passphrase])
   end
 
   defp env(kw) do
