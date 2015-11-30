@@ -44,8 +44,8 @@ defmodule Wifixir do
     interface = options[:interface] || env :interface
 
     {script_file, data_file} = make_file_paths argv, script_dir, data_dir
-    script_output script_file, interface, data_file
-    data_output data_file, run_wpa_passphrase(ssid, passphrase)
+    script_write script_file, interface, data_file
+    data_write data_file, run_wpa_passphrase(ssid, passphrase)
 
     :ok = File.chmod script_file, 0o700
     :ok = File.chmod data_file, 0o700
@@ -68,14 +68,14 @@ defmodule Wifixir do
     end
   end
 
-  def script_output(path, interface, data_file) do
+  def script_write(path, interface, data_file) do
     template_file = Path.join(env(:template_dir), "script.eex")
     template_output = eval_file(template_file,
                               [interface: interface, data_filename: data_file])
     :ok = File.write path, template_output
   end
 
-  def data_output(path, wpa_passphrase_output) do
+  def data_write(path, wpa_passphrase_output) do
     template_file = Path.join(env(:template_dir), "data.eex")
     template_output = eval_file(template_file,
                               [wpa_passphrase_output: wpa_passphrase_output])
