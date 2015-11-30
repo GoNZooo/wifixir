@@ -14,8 +14,8 @@ defmodule Wifixir do
     aliases: [s: :ssid, p: :passphrase])
   end
 
-  defp env(kw) do
-    Application.get_env :wifixir, kw
+  defp env(keyword) do
+    Application.get_env :wifixir, keyword
   end
 
   defp make_file_paths(argv, script_dir, data_dir) do
