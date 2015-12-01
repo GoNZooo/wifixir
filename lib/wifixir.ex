@@ -7,11 +7,9 @@ defmodule Wifixir do
   end
 
   defp parse_args(args) do
-    OptionParser.parse(
-    args,
-    strict:
-    [ssid: :string, passphrase: :string],
-    aliases: [s: :ssid, p: :passphrase])
+    OptionParser.parse(args, strict:
+                       [ssid: :string, passphrase: :string],
+                       aliases: [s: :ssid, p: :passphrase])
   end
 
   defp env(keyword) do
@@ -60,8 +58,8 @@ defmodule Wifixir do
 
   def run_wpa_passphrase(ssid, passphrase) do
     port = Port.open(
-    {:spawn, "wpa_passphrase #{ssid} #{passphrase}"},
-    [:stderr_to_stdout])
+      {:spawn, "wpa_passphrase #{ssid} #{passphrase}"},
+      [:stderr_to_stdout])
 
     receive do
       {^port, {:data, wpa_output}} -> wpa_output
@@ -70,15 +68,15 @@ defmodule Wifixir do
 
   def script_write(path, interface, data_file) do
     template_file = Path.join(env(:template_dir), "script.eex")
-    template_output = eval_file(template_file,
-                              [interface: interface, data_filename: data_file])
+    template_output = eval_file(template_file, [interface: interface,
+                                                data_filename: data_file])
     :ok = File.write path, template_output
   end
 
   def data_write(path, wpa_passphrase_output) do
     template_file = Path.join(env(:template_dir), "data.eex")
     template_output = eval_file(template_file,
-                              [wpa_passphrase_output: wpa_passphrase_output])
+                                [wpa_passphrase_output: wpa_passphrase_output])
     :ok = File.write path, template_output
   end
 end
