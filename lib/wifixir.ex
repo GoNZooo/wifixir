@@ -8,8 +8,8 @@ defmodule Wifixir do
 
   defp parse_args(args) do
     OptionParser.parse(args, strict:
-                       [ssid: :string, passphrase: :string],
-                       aliases: [s: :ssid, p: :passphrase])
+                       [ssid: :string, passphrase: :string, help: :boolean],
+                       aliases: [s: :ssid, p: :passphrase, h: :help])
   end
 
   defp env(keyword) do
