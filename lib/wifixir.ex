@@ -1,4 +1,9 @@
 defmodule Wifixir do
+  @moduledoc"""
+  Module for running wifixir, a tool that creates connection scripts for
+  connecting to Wifi networks. This enables you to not use a much too big
+  connection manager that's bloated and crap.
+  """
   alias IO.ANSI
   import Elixir.EEx, only: [eval_file: 2]
 
@@ -28,11 +33,20 @@ defmodule Wifixir do
     File.mkdir_p data_dir
   end
 
-  def process([]) do
+  defp process({[help: true], _, _}) do
+    IO.puts "Usage: wifixir [-h/--help] -s/--ssid <ssid> -p/--passphrase <passphrase> <script/data basename>"
+  end
+
+  defp process([]) do
     IO.puts("#{ANSI.red}No args given.#{ANSI.reset}")
   end
 
-  def process({options, argv, []}) do
+  defp process({options, [], []}) do
+    IO.puts("#{ANSI.red}No basename given for files.#{ANSI.reset}")
+  end
+
+  defp process({options, argv, []}) do
+    IO.puts "#{inspect argv}" 
     script_dir = Path.expand("~/.config/wifixir/script") || env :script_dir
     data_dir = Path.expand("~/.config/wifixir/data") || env :data_dir
     create_dirs script_dir, data_dir
