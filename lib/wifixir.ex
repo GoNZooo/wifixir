@@ -65,12 +65,12 @@ defmodule Wifixir do
     IO.puts "Wrote script to #{script_file} and data to #{data_file}."
   end
 
-  def process({_options, _argv, errors}) do
+  defp process({_options, _argv, errors}) do
     IO.puts "#{ANSI.red}The following switches are unknown:#{ANSI.reset}"
     Enum.each errors, fn {arg, _} -> IO.puts arg end
   end
 
-  def run_wpa_passphrase(ssid, passphrase) do
+  defp run_wpa_passphrase(ssid, passphrase) do
     port = Port.open(
       {:spawn, "wpa_passphrase #{ssid} #{passphrase}"},
       [:stderr_to_stdout])
@@ -80,14 +80,14 @@ defmodule Wifixir do
     end
   end
 
-  def script_write(path, interface, data_file) do
+  defp script_write(path, interface, data_file) do
     template_file = Path.join(env(:template_dir), "script.eex")
     template_output = eval_file(template_file, [interface: interface,
                                                 data_filename: data_file])
     :ok = File.write path, template_output
   end
 
-  def data_write(path, wpa_passphrase_output) do
+  defp data_write(path, wpa_passphrase_output) do
     template_file = Path.join(env(:template_dir), "data.eex")
     template_output = eval_file(template_file,
                                 [wpa_passphrase_output: wpa_passphrase_output])
