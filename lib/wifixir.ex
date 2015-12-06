@@ -46,7 +46,6 @@ defmodule Wifixir do
   end
 
   defp process({options, argv, []}) do
-    IO.puts "#{inspect argv}" 
     script_dir = Path.expand("~/.config/wifixir/script") || env :script_dir
     data_dir = Path.expand("~/.config/wifixir/data") || env :data_dir
     create_dirs script_dir, data_dir
