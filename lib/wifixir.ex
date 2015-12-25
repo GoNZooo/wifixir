@@ -71,7 +71,7 @@ defmodule Wifixir do
 
   defp run_wpa_passphrase(ssid, passphrase) do
     port = Port.open(
-      {:spawn, "wpa_passphrase #{ssid} #{passphrase}"},
+      {:spawn, "wpa_passphrase \"#{ssid}\" \"#{passphrase}\""},
       [:stderr_to_stdout])
 
     receive do
